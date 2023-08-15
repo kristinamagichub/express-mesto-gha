@@ -38,11 +38,11 @@ module.exports.deleteCard = (req, res) => {
         res.status(400).send({ message: `Некоректный _id: ${req.params.cardId} карточки` });
       } else if (err instanceof mongoose.Error.DocumentNotFoundError) {
         res.status(404).send({
-          message: `Карточка по указанному _id: ${req.params.cardId} не найдена`
+          message: `Карточка по указанному _id: ${req.params.cardId} не найдена`,
         });
       } else {
         res.status(500).send({ message: 'На сервере произошла ошибка' });
-      };
+      }
     });
 };
 
@@ -57,7 +57,7 @@ module.exports.likeCard = (req, res) => {
         res.status(400).send({ message: `Некоректный _id: ${req.params.cardId} карточки` });
       } else if (err instanceof mongoose.Error.DocumentNotFoundError) {
         res.status(404).send({
-          message: `Карточка по указанному _id: ${req.params.cardId} не найдена`
+          message: `Карточка по указанному _id: ${req.params.cardId} не найдена`,
         });
       } else {
         res.status(500).send({ message: 'На сервере произошла ошибка' });
@@ -76,7 +76,7 @@ module.exports.dislikeCard = (req, res) => {
         res.status(400).send({ message: `Некоректный _id: ${req.params.cardId} карточки` });
       } else if (err instanceof mongoose.Error.DocumentNotFoundError) {
         res.status(404).send({
-          message: `Карточка по указанному _id: ${req.params.cardId} не найдена`
+          message: `Карточка по указанному _id: ${req.params.cardId} не найдена`,
         });
       } else {
         res.status(500).send({ message: 'На сервере произошла ошибка' });
