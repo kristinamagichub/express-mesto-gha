@@ -23,7 +23,7 @@ module.exports.addCard = (req, res) => {
 module.exports.getCards = (req, res) => {
   Card.find({})
     .populate(['owner', 'likes'])
-    .then((cards) => res.status(201).send(cards))
+    .then((cards) => res.status(200).send(cards))
     .catch(() => res.status(500).send({ message: 'На сервере произошла ошибка' }));
 };
 
