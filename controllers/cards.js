@@ -3,7 +3,6 @@ const Card = require('../models/card');
 
 module.exports.addCard = (req, res) => {
   const { name, link } = req.body;
-  console.log('addCard', name, link)
   Card.create({ name, link, owner: req.user._id })
     .then((card) => {
       Card.findById(card._id)
@@ -33,8 +32,8 @@ module.exports.deleteCard = (req, res) => {
   Card.findByIdAndRemove(req.params.cardId)
     .then((card) => {
       if (card) {
-        res.status(200).send(card)
-      } else { throw new Error('DocumentNotFoundError') }
+        res.status(200).send(card);
+      } else { throw new Error('DocumentNotFoundError'); }
     })
     .catch((err) => {
       if (err instanceof mongoose.Error.CastError) {
@@ -54,8 +53,8 @@ module.exports.likeCard = (req, res) => {
     .populate(['owner', 'likes'])
     .then((card) => {
       if (card) {
-        res.status(200).send(card)
-      } else { throw new Error('DocumentNotFoundError') }
+        res.status(200).send(card);
+      } else { throw new Error('DocumentNotFoundError'); }
     })
     .catch((err) => {
       if (err instanceof mongoose.Error.CastError) {
@@ -75,8 +74,8 @@ module.exports.dislikeCard = (req, res) => {
     .populate(['owner', 'likes'])
     .then((card) => {
       if (card) {
-        res.status(200).send(card)
-      } else { throw new Error('DocumentNotFoundError') }
+        res.status(200).send(card);
+      } else { throw new Error('DocumentNotFoundError'); }
     })
     .catch((err) => {
       if (err instanceof mongoose.Error.CastError) {
