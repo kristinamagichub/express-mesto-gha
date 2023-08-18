@@ -6,7 +6,7 @@ module.exports.addUser = (req, res) => {
   User.create({ name, about, avatar })
     .then((user) => res.status(201).send(user))
     .catch((err) => {
-      if (err.name === 'ValidationError') {
+      if (err instanceof mongoose.Error.ValidationError) {
         res.status(400).send({ message: err.message });
       } else {
         res.status(500).send({ message: 'На сервере произошла ошибка' });
@@ -39,44 +39,40 @@ module.exports.getUserById = (req, res) => {
     });
 };
 
-module.exports.editUserData = (req, res) => {
+module.exports.editUserData = async (req, res) => {
   const { name, about } = req.body;
-  if (req.user._id) {
-    User.findByIdAndUpdate(req.user._id, { name, about }, { new: 'true', runValidators: true })
-      .then((user) => res.send(user))
-      .catch((err) => {
-        if (err.name === 'ValidationError') {
-          res.status(400).send({ message: err.message });
-        } else {
-          res.status(404).send({
-            message: `Пользователь по указанному _id: ${req.params.userId} не найден`,
-          });
-        }
+  try {
+    const user = await User.findByIdAndUpdate(req.body._id, { name, about }, { new: 'true', runValidators: true })
+      .orFail();
+    res.status(200).send(user);
+  } catch (err) {
+    if (err instanceof mongoose.Error.CastError) {
+      res.status(400).send({ message: `Некоректный id: ${req.body._id}` });
+    } else if (err instanceof mongoose.Error.DocumentNotFoundError) {
+      res.status(404).send({
+        message: `Пользователь по указанному _id: ${req.body._id} не найден`,
       });
-  } else {
-    res.status(500).send({ message: 'На сервере произошла ошибка' });
+    } else {
+      res.status(500).send({ message: 'На сервере произошла ошибка' });
+    }
   }
 };
 
-module.exports.editUserAvatar = (req, res) => {
-  if (req.user._id) {
-    User.findByIdAndUpdate(
-      req.user._id,
-      { avatar: req.body.avatar },
-      { new: 'true', runValidators: true },
-    )
-      .then((user) => res.send(user))
-      .catch((err) => {
-        if (err.name === 'ValidationError') {
-          res.status(400).send({ message: err.message });
-        } else {
-          res.status(404).send({
-            message: `Пользователь
- по указанному _id: ${req.params.userId} не найден`,
-          });
-        }
+module.exports.editUserAvatar = async (req, res) => {
+  const { avatar } = req.body;
+  try {
+    const user = await User.findByIdAndUpdate(req.body._id, { avatar }, { new: 'true', runValidators: true })
+      .orFail();
+    res.status(200).send(user);
+  } catch (err) {
+    if (err instanceof mongoose.Error.CastError) {
+      res.status(400).send({ message: `Некоректный id: ${req.body._id}` });
+    } else if (err instanceof mongoose.Error.DocumentNotFoundError) {
+      res.status(404).send({
+        message: `Пользователь по указанному _id: ${req.body._id} не найден`,
       });
-  } else {
-    res.status(500).send({ message: 'На сервере произошла ошибка' });
+    } else {
+      res.status(500).send({ message: 'На сервере произошла ошибка' });
+    }
   }
 };
