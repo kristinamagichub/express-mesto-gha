@@ -64,15 +64,15 @@ module.exports.editUserData = async (req, res) => {
 module.exports.editUserAvatar = async (req, res) => {
   const { avatar } = req.body;
   try {
-    const user = await User.findByIdAndUpdate(req.body._id, { avatar }, { new: 'true', runValidators: true })
+    const user = await User.findByIdAndUpdate(req.user._id, { avatar }, { new: 'true', runValidators: true })
       .orFail();
     res.status(200).send(user);
   } catch (err) {
     if (err instanceof mongoose.Error.CastError) {
-      res.status(400).send({ message: `Некоректный id: ${req.body._id}` });
+      res.status(400).send({ message: `Некоректный id: ${req.user._id}` });
     } else if (err instanceof mongoose.Error.DocumentNotFoundError) {
       res.status(404).send({
-        message: `Пользователь по указанному _id: ${req.body._id} не найден`,
+        message: `Пользователь по указанному _id: ${req.user._id} не найден`,
       });
     } else {
       res.status(500).send({ message: 'На сервере произошла ошибка' });
