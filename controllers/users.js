@@ -46,6 +46,9 @@ module.exports.editUserData = async (req, res) => {
       .orFail();
     res.status(200).send(user);
   } catch (err) {
+    if (err instanceof mongoose.Error.ValidationError) {
+      res.status(400).send({ message: 'Некоректно заполненные поля' });
+    }
     if (err instanceof mongoose.Error.CastError) {
       res.status(400).send({ message: `Некоректный id: ${req.user._id}` });
     } else if (err instanceof mongoose.Error.DocumentNotFoundError) {
