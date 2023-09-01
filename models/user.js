@@ -19,7 +19,6 @@ const userSchema = new mongoose.Schema({
   },
   avatar: {
     type: String,
-    // default: 'https://www.digitalocean.com/_next/static/media/intro-to-cloud.d49bc5f7.jpeg',
     default: 'https://pictures.s3.yandex.net/resources/jacques-cousteau_1604399756.png',
     validate: {
       validator(v) {
@@ -28,24 +27,12 @@ const userSchema = new mongoose.Schema({
       message: 'Введите url адрес',
     },
   },
-  //   validate: [{
-  //     validator: url => validator.isURL(url),
-  //     message: 'Введите url адрес',
-  //   }],
-  // },
-
-  // validate: [{
-  //   validator: v => validator.isEmail(v),
-  //   message: shared.i18n.t('invalidEmail'),
-  // }],
   email: {
     type: String,
     required: [true, 'Поле должно быть заполнено'],
     unique: true,
     validate: [{
       validator: (email) => validator.isEmail(email),
-      //   return /^\S+@\S+\.\S+$/.test(email);
-      // },
       message: 'Введите верный email',
     }],
   },

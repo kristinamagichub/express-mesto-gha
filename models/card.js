@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-// const validator = require('validator');
 const urlRegex = require('../utils/constants');
 
 const cardSchema = new mongoose.Schema({
@@ -16,11 +15,6 @@ const cardSchema = new mongoose.Schema({
       validator: (url) => urlRegex.test(url),
       message: 'Введите url адрес',
     }],
-
-    // validate: [{
-    //   validator: (url) => validator.isURL(url),
-    //   message: 'Введите url адрес',
-    // }],
   },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
