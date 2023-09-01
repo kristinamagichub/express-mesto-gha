@@ -44,8 +44,6 @@ module.exports.deleteCard = async (req, res, next) => {
       next(new NotFoundError(`Карточка по указанному id: ${req.params.cardId} не найдена`));// 404
     } else if (err instanceof mongoose.Error.CastError) {
       next(new BadRequestError(`Некоректный id: ${req.params.cardId} карточки`));// 400
-      // } else if (err instanceof ForbiddenError) {
-      //   next(new ForbiddenError(err.message));
     } else {
       next(err);
     }
