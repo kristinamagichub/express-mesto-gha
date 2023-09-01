@@ -34,7 +34,7 @@ module.exports.deleteCard = async (req, res, next) => {
     const card = await Card.findById(req.params.cardId)
       .orFail();
     if (!card.owner.equals(req.user._id)) {
-      throw new ForbiddenError('Карточка другого пользователя');
+      throw new ForbiddenError('Карточка другого пользователя');//403
     }
     const deleteItem = await Card.deleteOne(card)
       .orFail();
@@ -45,7 +45,7 @@ module.exports.deleteCard = async (req, res, next) => {
     } else if (err instanceof mongoose.Error.CastError) {
       next(new BadRequestError(`Некоректный id: ${req.params.cardId} карточки`));// 400
       // } else if (err instanceof ForbiddenError) {
-      //   next(new ForbiddenError(err.message));//403
+      //   next(new ForbiddenError(err.message));
     } else {
       next(err);
     }
