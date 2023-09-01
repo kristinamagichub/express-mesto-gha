@@ -34,7 +34,7 @@ module.exports.deleteCard = async (req, res, next) => {
     const card = await Card.findById(req.params.cardId)
       .orFail();
     if (!card.owner.equals(req.user._id)) {
-      throw new ForbiddenError('Карточка другого пользователя');//403
+      throw new ForbiddenError('Карточка другого пользователя');// 403
     }
     const deleteItem = await Card.deleteOne(card)
       .orFail();
