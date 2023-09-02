@@ -62,6 +62,7 @@ module.exports.editUserData = async (req, res, next) => {
   } catch (err) {
     if (err instanceof mongoose.Error.ValidationError) {
       next(new BadRequestError('Некорректно заполнено одно из двух полей')); // 400
+      return;
     }
     if (err instanceof mongoose.Error.CastError) {
       next(new BadRequestError(`Некоректный id: ${req.user._id}`));// 400
@@ -82,6 +83,7 @@ module.exports.editUserAvatar = async (req, res, next) => {
   } catch (err) {
     if (err instanceof mongoose.Error.ValidationError) {
       next(new BadRequestError(`Некоректно заполненное поле ${err.errors.avatar.message} `)); // 400
+      return;
     }
     if (err instanceof mongoose.Error.CastError) {
       next(new BadRequestError(`Некоректный id: ${req.user._id}`));// 400
