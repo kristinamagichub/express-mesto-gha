@@ -61,7 +61,7 @@ module.exports.editUserData = async (req, res, next) => {
     res.status(HTTP_STATUS_OK).send(user);
   } catch (err) {
     if (err instanceof mongoose.Error.ValidationError) {
-      next(new BadRequestError('Некоректно заполненное поле')); // 400
+      next(new BadRequestError('Некорректно заполнено одно из двух полей')); // 400
     }
     if (err instanceof mongoose.Error.CastError) {
       next(new BadRequestError(`Некоректный id: ${req.user._id}`));// 400
