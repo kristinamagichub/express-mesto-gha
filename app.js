@@ -39,7 +39,7 @@ app.use('*', (req, res) => {
   res.status(404).send({ message: 'страница не найдена' });
 });
 
-//app.use('/', require('./routes/index'));
+// app.use('/', require('./routes/index'));
 
 app.use(errors());
 
