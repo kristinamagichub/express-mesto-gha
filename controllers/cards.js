@@ -56,7 +56,7 @@ module.exports.likeCard = (req, res, next) => {
     .then((card) => {
       if (card) {
         res.status(HTTP_STATUS_OK).send(card);
-      } else { throw new Error('DocumentNotFoundError'); }
+      } else { next(new Error('DocumentNotFoundError')); }
     })
     .catch((err) => {
       if (err instanceof mongoose.Error.CastError) {
@@ -75,7 +75,7 @@ module.exports.dislikeCard = (req, res, next) => {
     .then((card) => {
       if (card) {
         res.status(HTTP_STATUS_OK).send(card);
-      } else { throw new Error('DocumentNotFoundError'); }
+      } else { next(new Error('DocumentNotFoundError')); }
     })
     .catch((err) => {
       if (err instanceof mongoose.Error.CastError) {
