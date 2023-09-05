@@ -1,4 +1,8 @@
+const { HTTP_STATUS_UNAUTHORIZED } = require('http2').constants;
 const jwt = require('jsonwebtoken');
+const mongoose = require('mongoose');
+
+const UnauthorizedError = require('../errors/Unauthorized');
 
 module.exports = (req, res, next) => {
   const { authorization } = req.headers;
@@ -6,10 +10,8 @@ module.exports = (req, res, next) => {
   if (!authorization || !authorization.startsWith('Bearer ')) { res.status(HTTP_STATUS_UNAUTHORIZED).send(); }
   if (err instanceof mongoose.Error.UnauthorizedError) {
     next(new UnauthorizedError('Необходима авторизация')); // 401
-    return;
-  } else {
-    next(err);
   }
+  next(err);
 
   const token = authorization.replace('Bearer ', '');
   let payload;
@@ -19,10 +21,8 @@ module.exports = (req, res, next) => {
   } catch (err) {
     if (err instanceof mongoose.Error.UnauthorizedError) {
       next(new UnauthorizedError('Необходима авторизация')); // 401
-      return;
-    } else {
-      next(err);
     }
+    next(err);
   }
 
   req.user = payload; // записываем пейлоуд в объект запроса
