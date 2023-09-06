@@ -6,6 +6,7 @@ const rateLimit = require('express-rate-limit');
 const { errors } = require('celebrate');
 const auth = require('./middlewares/auth');
 const errorHandler = require('./middlewares/errorHandler');
+const NotFoundError = require('./errors/NotFoundError');
 
 const { PORT = 3000, DB_URL = 'mongodb://127.0.0.1:27017/mestodb' } = process.env; // переменная окружения
 
@@ -35,8 +36,8 @@ app.use(auth);
 app.use('/users', require('./routes/users'));
 app.use('/cards', require('./routes/cards'));
 
-app.use('*', (req, res) => {
-  res.status(404).send({ message: 'страница не найдена' });
+app.use('*', (req, res, next) => {
+  next(new NotFoundError('страница не найдена'));
 });
 
 // app.use('/', require('./routes/index'));
