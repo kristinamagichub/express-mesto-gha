@@ -1,15 +1,13 @@
 [![Tests](../../actions/workflows/tests-13-sprint.yml/badge.svg)](../../actions/workflows/tests-13-sprint.yml) [![Tests](../../actions/workflows/tests-14-sprint.yml/badge.svg)](../../actions/workflows/tests-14-sprint.yml)
 
-spr 8
+Проект Mesto: подготовка бэкенда (Проектная работа 13)
 
-Проект Mesto: 
+Проект Mesto: регистрация и авторизация на бэкенде (Проектная работа 14)
 
-подготовка бэкенда (Проектная работа 13)
-
-регистрация и авторизация на бэкенде (Проектная работа 14)
-
-
-# Проект Mesto фронтенд + бэкенд
+___
+# __Место__
+___
+фронтенд + бэкенд
 
 
 ## Директории
